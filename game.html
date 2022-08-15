@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html><!--this is how you write a comment in HTML-->
+<head>
+    <title>NinjaMan</title>
+    <style type="text/css">/*this is how you write a comment in css*/
+        *{
+            margin:0;
+            padding:0;
+        }
+        .row{
+            line-height: 0;
+        }
+        .wall{
+            background-color: rgb(20, 20, 90);
+            height: 40px;
+            width: 40px;
+            display: inline-block;
+            background-image: url('img/crate.png');
+            background-size: contain;
+        }
+        .sushi{
+            background-color: rgb(0, 0, 3);
+            height: 40px;
+            width: 40px;
+            display: inline-block;
+            background-image: url('img/sushi2.png');
+            background-size: contain;
+        }
+        .onigiri{
+            background-color: rgb(0, 0, 3);
+            height: 40px;
+            width: 40px;
+            display: inline-block;
+            background-image: url('img/onigiri2.png');
+            background-size: contain;
+        }
+        .blank{
+            background-color: rgb(0, 0, 3);
+            height: 40px;
+            width: 40px;
+            display: inline-block;
+            background-image: url('img/floor.png');
+            background-size: contain;
+        }
+        #ninjaman{
+            height: 40px;
+            width: 40px;
+            display: inline-block;
+            background-image: url('img/ninja.gif');
+            background-size: contain;
+            position: absolute;
+        }
+        #enemy {
+            height: 40px;
+            width: 40px;
+            display: inline-block;
+            background-image: url('pumpky.gif');
+            background-size: contain;
+            position: absolute;
+            left: 40px;
+            top: 40px;
+        }
+        #theScore{
+            font-size: 50;/*this code does not work*/
+        }
+    </style>
+</head>
+<body>
+    <div id='world'></div>
+    <div id='ninjaman'></div>
+    <div id='enemy'></div>
+    <div id='theScore'>Score:</div>
+    <div id='livesRemaining'>lives remaining: NA</div>
+    <div id='enterLength'><!--enter length from 5-9: --></div>
+    <div id='enterDepth'><!--enter depth from 5-9: --></div>
+</body>
+<script type="text/javascript">//this is how you write a comment in Javascript
+    function grn(min,max){ //generates a random number between and including two numbers
+    return Math.floor(Math.random() * (max-min +1)+min);
+    }
+    function generateArray(worldLength,min, max){ //generates an array using random numbers
+    var arr =[]
+        for(i=1;i<worldLength+1;i++){
+            arr.push(grn(min,max));
+        }
+    return arr;
+    }
+
+    var world=[];
+    var greenLightDepth=false, greenLightLength=false;
+    var x=9;
+    var y=9;
+    function askForLength(){
+        for(keypress=2;keypress!=0;keypress--){//keycode 48 is 0. keycode 57 is 9
+            document.onkeydown=function(e){
+                if(e.keycode==48){
+                    var output="";
+                    output="<div class = enterLength>enter length from 5-9: 0</div>"
+                    console.log(output);
+                    return output;
+                }
+            }
+        }
+    }
+    //askForLength();
+    var worldDepth=x;
+    function generateWorld(worldLength){//this should generate multiple random arrays
+        for(var i=0;i<worldDepth;i++){
+            world.push(generateArray(worldLength,0,3))
+        }
+    }
+    generateWorld(y);
+    console.log(world);
+    var worldDict={
+        0:'blank',
+        1:'wall',
+        2:'sushi',
+        3:'onigiri',
+        4:'extralife',
+        5:'powerup'
+    }
+    function drawWorld(){
+        output="";
+        for(var row=0;row<world.length;row++){
+            output += "<div class = 'row'>"
+            for(var x=0;x<world[row].length;x++){
+                output+="<div class = '" + worldDict[world[row][x]] +"'></div>"
+                //worldDict[world[row][x]]
+            }
+            output += "</div>"
+        }
+        document.getElementById('world').innerHTML=output;
+    }
+    drawWorld();
+
+    function drawScore(){
+        output="<div class = 'theScore'> Score: "+ ninjaman.score+"</div>";
+        document.getElementById('theScore').innerHTML=output;
+    }
+    drawScore();
+
+    var ninjaman= {
+        x: 1,
+        y: 1,
+        score:0
+    }
+    function drawNinjaman(){
+        document.getElementById('ninjaman').style.top=ninjaman.y * 40 + 'px'
+        document.getElementById('ninjaman').style.left=ninjaman.x * 40 +'px'
+    }
+    drawNinjaman();
+
+    function updateScore(){
+        if(world[ninjaman.x][ninjamanx.y]==2){
+            world[ninjaman.y][ninjaman.x]=0;
+            ninjaman.score+=5;
+        }
+        else if(world[ninjaman.x][ninjamanx.y]==3){
+            world[ninjaman.y][ninjaman.x]=0;
+            ninjaman.score+=10;
+        }
+    } 
+
+    var enemy = {
+        x: 8,
+        y: 6,
+    }
+    function drawEnemy(){
+        document.getElementById('enemy').style.top = enemy.y*40+'px'
+        document.getElementById('enemy').style.left = enemy.x*40+'px'
+    }
+    drawEnemy();
+
+    function moveNinja(){
+        document.onkeydown=function(e){
+            if(e.keyCode==37 && ninjaman.x>0){//left
+                if(world[ninjaman.y][ninjaman.x-1]!=1){
+                    ninjaman.x--;
+                }
+                setTimeout(moveNinja,400);//this code does not work. but it does work if another function is asking for a keypress inside of function moveNinja
+            }
+            if(e.keyCode==39 && ninjaman.x<x-1){//right
+                if(world[ninjaman.y][ninjaman.x+1]!=1){
+                    ninjaman.x++;
+                }
+                setTimeout(moveNinja,400);
+            }
+            if(e.keyCode==38 && ninjaman.y>0){//up
+                if(world[ninjaman.y-1][ninjaman.x]!=1){
+                    ninjaman.y--;
+                }
+                setTimeout(moveNinja,400);
+            }
+            if(e.keyCode==40 && ninjaman.y<y-1){//down
+                if(world[ninjaman.y+1][ninjaman.x]!=1){
+                    ninjaman.y++;
+                }
+                setTimeout(moveNinja,400);
+            }
+            if(world[ninjaman.y][ninjaman.x] ==2){
+                world[ninjaman.y][ninjaman.x]=0;
+                ninjaman.score+=5;
+            }
+            else if(world[ninjaman.y][ninjaman.x]== 3){
+                world[ninjaman.y][ninjaman.x] =0;
+                ninjaman.score+=10;
+            }
+            drawNinjaman();
+            //world[ninjaman.y][ninjaman.x]=0;
+            //updateScore();
+            drawWorld();
+            drawScore();
+            drawEnemy();
+            setTimeout(moveNinja,400);
+        }
+    }
+    moveNinja();
+</script>
+</html>
