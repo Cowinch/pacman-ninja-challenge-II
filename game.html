@@ -177,7 +177,7 @@
     var enemy ={
         x: 8,
         y: 6,
-        turn:0
+        turn:0//turn variable is used to stagnate enemies movement as ghosts can move through walls, without this it would be game over very quickly
     }
     function drawEnemy(){
         document.getElementById('enemy').style.top = enemy.y*40+'px'
