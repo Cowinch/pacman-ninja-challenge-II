@@ -67,10 +67,10 @@
     <div id='world'></div>
     <div id='ninjaman'></div>
     <div id='enemy'></div>
-    <div id='theScore'>Score:</div>
+    <div id='theScore'>Score: </div>
     <div id='livesRemaining'>lives remaining: NA</div>
     <div id='enterLength'><!--enter length from 5-9: --></div>
-    <div id='enterDepth'><!--enter depth from 5-9: --></div>
+    <div id='enterDepth'><!--<font size=+2>enter depth from 5-9:</font>--></div>
 </body>
 <script type="text/javascript">//this is how you write a comment in Javascript
     function generateRandomNumber(min,max){ //generates a random number between and including two numbers
@@ -154,7 +154,7 @@
         }
     }
     function drawScore(){
-        output="<div class = 'theScore'> Score: "+ ninjaman.score+"</div>";
+        output="<div class = 'theScore'><font size=+3> Score: "+ ninjaman.score+"</font></div>";
         document.getElementById('theScore').innerHTML=output;
     }
 
@@ -167,10 +167,10 @@
             ninjaman.lives-=1;
         }
     }
-    //updateLives(); running this line breaks the game
+    //updateLives(); //running this line breaks the game
 
     function drawLives(){
-        output="<div class = 'livesRemaining'> Score: "+ ninjaman.lives+"</div>";
+        output="<div class = 'livesRemaining'> Lives remaining: "+ ninjaman.lives+"</div>";
         document.getElementById('livesRemaining').innerHTML=output;
     }
 
