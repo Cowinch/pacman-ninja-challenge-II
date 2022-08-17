@@ -88,12 +88,8 @@
     <div id='enemy'></div>
     <div id='theScore'>Score: </div>
     <div id='livesRemaining'>lives remaining: NA</div>
-    <div id='enterLength'>
-        <!--enter length from 5-9: -->
-    </div>
-    <div id='enterDepth'>
-        <!--<font size=+2>enter depth from 5-9:</font>-->
-    </div>
+    <div id='enterLength'><!-- enter length from 5-9: --></div>
+    <div id='enterDepth'><!--<font size=+2>enter depth from 5-9:</font>--></div>
 </body>
 <script type="text/javascript">//this is how you write a comment in Javascript
     function generateRandomNumber(min, max) { //generates a random number between and including two numbers
@@ -115,10 +111,10 @@
         for (keypress = 2; keypress != 0; keypress--) {//keycode 48 is 0. keycode 57 is 9
             document.onkeydown = function (e) {
                 if (e.keycode == 48) {
-                    var output = "";
-                    output = "<div class = enterLength>enter length from 5-9: 0</div>"
-                    console.log(output);
-                    return output;
+                    var lengthOutput = "";
+                    lengthOutput = "<div class = enterLength>enter length from 5-9: 0</div>"
+                    console.log(lengthOutput);
+                    return lengthOutput;
                 }
             }
         }
