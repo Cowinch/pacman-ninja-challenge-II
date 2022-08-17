@@ -10,6 +10,10 @@
             margin: 0;
             padding: 0;
         }
+        body{
+            background-image: url('img/black_bg.png');/*this does not work*/
+            border: 1px solid black;
+        }
 
         .row {
             line-height: 0;
@@ -192,17 +196,6 @@
             enemy.turn = 0;
         }
     }
-
-    function updateScore() {//even though this function is never called, it still runs and it runs correctly
-        if (world[ninjaman.x][ninjamanx.y] == 2) {
-            world[ninjaman.y][ninjaman.x] = 0;
-            ninjaman.score += 5;
-        }
-        else if (world[ninjaman.x][ninjamanx.y] == 3) {
-            world[ninjaman.y][ninjaman.x] = 0;
-            ninjaman.score += 10;
-        }
-    }
     function drawScore() {
         output = "<div class = 'theScore'><font size=+3> Score: " + ninjaman.score + "</font></div>";
         document.getElementById('theScore').innerHTML = output;
@@ -260,7 +253,6 @@
             }
             drawNinjaman();
             //world[ninjaman.y][ninjaman.x]=0;
-            //updateScore(); if this function is called, code breaks as it cannot find ninjaman.x, however codes run and runs correctly without even being called???
             drawWorld();
             drawScore();
             moveEnemy();
