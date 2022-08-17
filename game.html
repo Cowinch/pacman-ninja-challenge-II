@@ -1,16 +1,21 @@
 <!DOCTYPE html>
-<html><!--this is how you write a comment in HTML-->
+<html>
+<!--this is how you write a comment in HTML-->
+
 <head>
     <title>NinjaMan</title>
-    <style type="text/css">/*this is how you write a comment in css*/
-        *{
-            margin:0;
-            padding:0;
+    <style type="text/css">
+        /*this is how you write a comment in css*/
+        * {
+            margin: 0;
+            padding: 0;
         }
-        .row{
+
+        .row {
             line-height: 0;
         }
-        .wall{
+
+        .wall {
             background-color: rgb(20, 20, 90);
             height: 40px;
             width: 40px;
@@ -18,7 +23,8 @@
             background-image: url('img/crate.png');
             background-size: contain;
         }
-        .sushi{
+
+        .sushi {
             background-color: rgb(0, 0, 3);
             height: 40px;
             width: 40px;
@@ -26,7 +32,8 @@
             background-image: url('img/sushi2.png');
             background-size: contain;
         }
-        .onigiri{
+
+        .onigiri {
             background-color: rgb(0, 0, 3);
             height: 40px;
             width: 40px;
@@ -34,7 +41,8 @@
             background-image: url('img/onigiri2.png');
             background-size: contain;
         }
-        .blank{
+
+        .blank {
             background-color: rgb(0, 0, 3);
             height: 40px;
             width: 40px;
@@ -42,7 +50,8 @@
             background-image: url('img/floor.png');
             background-size: contain;
         }
-        #ninjaman{
+
+        #ninjaman {
             height: 40px;
             width: 40px;
             display: inline-block;
@@ -50,7 +59,8 @@
             background-size: contain;
             position: absolute;
         }
-        #enemy{
+
+        #enemy {
             height: 40px;
             width: 40px;
             display: inline-block;
@@ -58,42 +68,49 @@
             background-size: contain;
             position: absolute;
         }
-        #theScore{
-            font-size: 50;/*this code does not work*/
+
+        #theScore {
+            font-size: 50;
+            /*this code does not work*/
         }
     </style>
 </head>
+
 <body>
     <div id='world'></div>
     <div id='ninjaman'></div>
     <div id='enemy'></div>
     <div id='theScore'>Score: </div>
     <div id='livesRemaining'>lives remaining: NA</div>
-    <div id='enterLength'><!--enter length from 5-9: --></div>
-    <div id='enterDepth'><!--<font size=+2>enter depth from 5-9:</font>--></div>
+    <div id='enterLength'>
+        <!--enter length from 5-9: -->
+    </div>
+    <div id='enterDepth'>
+        <!--<font size=+2>enter depth from 5-9:</font>-->
+    </div>
 </body>
 <script type="text/javascript">//this is how you write a comment in Javascript
-    function generateRandomNumber(min,max){ //generates a random number between and including two numbers
-    return Math.floor(Math.random() * (max-min +1)+min);
+    function generateRandomNumber(min, max) { //generates a random number between and including two numbers
+        return Math.floor(Math.random() * (max - min + 1) + min);
     }
-    function generateArray(worldLength,min, max){ //generates an array using random numbers
-    var arr =[]
-        for(i=1;i<worldLength+1;i++){
-            arr.push(generateRandomNumber(min,max));
+    function generateArray(worldLength, min, max) { //generates an array using random numbers
+        var arr = []
+        for (i = 1; i < worldLength + 1; i++) {
+            arr.push(generateRandomNumber(min, max));
         }
-    return arr;
+        return arr;
     }
 
-    var world=[];
-    var greenLightDepth=false, greenLightLength=false;//this code does nothing for now. Used to ask user to input length and depth of world before generating
-    var x=16;
-    var y=16;
-    function askForLength(){
-        for(keypress=2;keypress!=0;keypress--){//keycode 48 is 0. keycode 57 is 9
-            document.onkeydown=function(e){
-                if(e.keycode==48){
-                    var output="";
-                    output="<div class = enterLength>enter length from 5-9: 0</div>"
+    var world = [];
+    var greenLightDepth = false, greenLightLength = false;//this code does nothing for now. Used to ask user to input length and depth of world before generating
+    var x = 10;
+    var y = 10;
+    function askForLength() {
+        for (keypress = 2; keypress != 0; keypress--) {//keycode 48 is 0. keycode 57 is 9
+            document.onkeydown = function (e) {
+                if (e.keycode == 48) {
+                    var output = "";
+                    output = "<div class = enterLength>enter length from 5-9: 0</div>"
                     console.log(output);
                     return output;
                 }
@@ -101,146 +118,145 @@
         }
     }
     //askForLength();
-    var worldDepth=x;
-    function generateWorld(worldLength){//this should generate multiple random arrays
-        for(var i=0;i<worldDepth;i++){
-            world.push(generateArray(worldLength,0,3))
+    var worldDepth = x;
+    function generateWorld(worldLength) {//this should generate multiple random arrays
+        for (var i = 0; i < worldDepth; i++) {
+            world.push(generateArray(worldLength, 0, 3))
         }
     }
     generateWorld(y);
     console.log(world);
-    var worldDict={
-        0:'blank',
-        1:'wall',
-        2:'sushi',
-        3:'onigiri',
-        4:'extralife',
-        5:'powerup'
+    var worldDict = {
+        0: 'blank',
+        1: 'wall',
+        2: 'sushi',
+        3: 'onigiri',
+        4: 'extralife',
+        5: 'powerup'
     }
-    function drawWorld(){
-        output="";
-        for(var row=0;row<world.length;row++){
+    function drawWorld() {
+        output = "";
+        for (var row = 0; row < world.length; row++) {
             output += "<div class = 'row'>"
-            for(var x=0;x<world[row].length;x++){
-                output+="<div class = '" + worldDict[world[row][x]] +"'></div>"
+            for (var x = 0; x < world[row].length; x++) {
+                output += "<div class = '" + worldDict[world[row][x]] + "'></div>"
                 //worldDict[world[row][x]]
             }
             output += "</div>"
         }
-        document.getElementById('world').innerHTML=output;
+        document.getElementById('world').innerHTML = output;
     }
     drawWorld();
-
-    var ninjaman= {
+    var ninjaman = {
         x: 1,
         y: 1,
-        score:0,
-        lives:3,
+        score: 0,
+        lives: 3,
     }
-    function drawNinjaman(){
-        document.getElementById('ninjaman').style.top=ninjaman.y * 40 + 'px'
-        document.getElementById('ninjaman').style.left=ninjaman.x * 40 +'px'
+    function drawNinjaman() {
+        document.getElementById('ninjaman').style.top = ninjaman.y * 40 + 'px'
+        document.getElementById('ninjaman').style.left = ninjaman.x * 40 + 'px'
     }
     drawNinjaman();
 
-    function updateScore(){//even though this function is never called, it still runs and it runs correctly
-        if(world[ninjaman.x][ninjamanx.y]==2){
-            world[ninjaman.y][ninjaman.x]=0;
-            ninjaman.score+=5;
-        }
-        else if(world[ninjaman.x][ninjamanx.y]==3){
-            world[ninjaman.y][ninjaman.x]=0;
-            ninjaman.score+=10;
-        }
-    }
-    function drawScore(){
-        output="<div class = 'theScore'><font size=+3> Score: "+ ninjaman.score+"</font></div>";
-        document.getElementById('theScore').innerHTML=output;
-    }
-
-    function updateLives(){//this function does not run unless called, and if it is called, breaks the code as it cannot find x
-        if(ninjaman.x==enemy.x && ninjaman.y==enemy.y){
-            ninjaman.x=1;
-            ninjaman.y=1;
-            enemy.x=8;
-            enemy.y=8;
-            ninjaman.lives-=1;
-        }
-    }
-    //updateLives(); //running this line breaks the game
-
-    function drawLives(){
-        output="<div class = 'livesRemaining'> Lives remaining: "+ ninjaman.lives+"</div>";
-        document.getElementById('livesRemaining').innerHTML=output;
-    }
-
-    var enemy ={
+    var enemy = {
         x: 8,
         y: 6,
-        turn:0//turn variable is used to stagnate enemies movement as ghosts can move through walls, without this it would be game over very quickly
+        turn: 0//turn variable is used to stagnate enemies movement as ghosts can move through walls, without this it would be game over very quickly
     }
-    function drawEnemy(){
-        document.getElementById('enemy').style.top = enemy.y*40+'px'
-        document.getElementById('enemy').style.left = enemy.x*40+'px'
+    function drawEnemy() {
+        document.getElementById('enemy').style.top = enemy.y * 40 + 'px'
+        document.getElementById('enemy').style.left = enemy.x * 40 + 'px'
     }
     drawEnemy();
-    function moveEnemy(){
-        if(enemy.turn==0){
-            if(enemy.x>ninjaman.x){//left
+    function moveEnemy() {
+        if (enemy.turn == 0) {
+            if (enemy.x > ninjaman.x) {//left
                 enemy.x--;
-            } 
-            else if(enemy.x<ninjaman.x){//right
+            }
+            else if (enemy.x < ninjaman.x) {//right
                 enemy.x++;
             }
-            else if(enemy.y>ninjaman.y){//up
+            else if (enemy.y > ninjaman.y) {//up
                 enemy.y--;
             }
-            else if(enemy.y<ninjaman.y){//down
+            else if (enemy.y < ninjaman.y) {//down
                 enemy.y++;
             }
-            enemy.turn+=1;
+            enemy.turn += 1;
         }
-        else if(enemy.turn<2){
-            enemy.turn+=1;
+        else if (enemy.turn < 2) {
+            enemy.turn += 1;
         }
-        else if(enemy.turn=2){
-            enemy.turn=0;
+        else if (enemy.turn = 2) {
+            enemy.turn = 0;
         }
     }
 
-    function moveNinja(){
-        document.onkeydown=function(e){
-            if(e.keyCode==37 && ninjaman.x>0){//left
-                if(world[ninjaman.y][ninjaman.x-1]!=1){
+    function updateScore() {//even though this function is never called, it still runs and it runs correctly
+        if (world[ninjaman.x][ninjamanx.y] == 2) {
+            world[ninjaman.y][ninjaman.x] = 0;
+            ninjaman.score += 5;
+        }
+        else if (world[ninjaman.x][ninjamanx.y] == 3) {
+            world[ninjaman.y][ninjaman.x] = 0;
+            ninjaman.score += 10;
+        }
+    }
+    function drawScore() {
+        output = "<div class = 'theScore'><font size=+3> Score: " + ninjaman.score + "</font></div>";
+        document.getElementById('theScore').innerHTML = output;
+    }
+
+    function updateLives() {
+        if (ninjaman.x == enemy.x && ninjaman.y == enemy.y) {
+            ninjaman.x = 1;
+            ninjaman.y = 1;
+            enemy.x = 8;
+            enemy.y = 8;
+            ninjaman.lives -= 1;
+        }
+    }
+    updateLives();
+
+    function drawLives() {
+        output = "<div class = 'livesRemaining'> Lives remaining: " + ninjaman.lives + "</div>";
+        document.getElementById('livesRemaining').innerHTML = output;
+    }
+
+    function moveNinja() {
+        document.onkeydown = function (e) {
+            if (e.keyCode == 37 && ninjaman.x > 0) {//left
+                if (world[ninjaman.y][ninjaman.x - 1] != 1) {
                     ninjaman.x--;
                 }
-                setTimeout(moveNinja,400);//this code does not work. but it does work if another function is asking for a keypress inside of function moveNinja
+                setTimeout(moveNinja, 400);//this code does not work. but it does work if another function is asking for a keypress inside of function moveNinja
             }
-            if(e.keyCode==39 && ninjaman.x<x-1){//right
-                if(world[ninjaman.y][ninjaman.x+1]!=1){
+            if (e.keyCode == 39 && ninjaman.x < x - 1) {//right
+                if (world[ninjaman.y][ninjaman.x + 1] != 1) {
                     ninjaman.x++;
                 }
-                setTimeout(moveNinja,400);
+                setTimeout(moveNinja, 400);
             }
-            if(e.keyCode==38 && ninjaman.y>0){//up
-                if(world[ninjaman.y-1][ninjaman.x]!=1){
+            if (e.keyCode == 38 && ninjaman.y > 0) {//up
+                if (world[ninjaman.y - 1][ninjaman.x] != 1) {
                     ninjaman.y--;
                 }
-                setTimeout(moveNinja,400);
+                setTimeout(moveNinja, 400);
             }
-            if(e.keyCode==40 && ninjaman.y<y-1){//down
-                if(world[ninjaman.y+1][ninjaman.x]!=1){
+            if (e.keyCode == 40 && ninjaman.y < y - 1) {//down
+                if (world[ninjaman.y + 1][ninjaman.x] != 1) {
                     ninjaman.y++;
                 }
-                setTimeout(moveNinja,400);
+                setTimeout(moveNinja, 400);
             }
-            if(world[ninjaman.y][ninjaman.x] ==2){
-                world[ninjaman.y][ninjaman.x]=0;
-                ninjaman.score+=5;
+            if (world[ninjaman.y][ninjaman.x] == 2) {
+                world[ninjaman.y][ninjaman.x] = 0;
+                ninjaman.score += 5;
             }
-            else if(world[ninjaman.y][ninjaman.x]== 3){
-                world[ninjaman.y][ninjaman.x] =0;
-                ninjaman.score+=10;
+            else if (world[ninjaman.y][ninjaman.x] == 3) {
+                world[ninjaman.y][ninjaman.x] = 0;
+                ninjaman.score += 10;
             }
             drawNinjaman();
             //world[ninjaman.y][ninjaman.x]=0;
@@ -250,8 +266,10 @@
             moveEnemy();
             drawEnemy();
             drawLives();
+            updateLives();
         }
     }
     moveNinja();
 </script>
+
 </html>
